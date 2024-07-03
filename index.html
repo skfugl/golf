@@ -148,14 +148,22 @@
         const canvas = document.getElementById('golfGame');
         const ctx = canvas.getContext('2d');
 
+        // Golf hole dimensions
+        const hole = {
+            x: canvas.width - 50,
+            y: 50,
+            radius: 15
+        };
+
         // Ball object
         const ball = {
             x: 50,
-            y: canvas.height - 30,
+            y: canvas.height - 50,
             radius: 10,
             color: 'white',
-            dx: 2,
-            dy: -2,
+            dx: 0,
+            dy: 0,
+            speed: 5
         };
 
         // Draw ball
@@ -167,6 +175,15 @@
             ctx.closePath();
         }
 
+        // Draw hole
+        function drawHole() {
+            ctx.beginPath();
+            ctx.arc(hole.x, hole.y, hole.radius, 0, Math.PI * 2);
+            ctx.fillStyle = 'black';
+            ctx.fill();
+            ctx.closePath();
+        }
+
         // Update ball position
         function updateBall() {
             ball.x += ball.dx;
@@ -174,20 +191,43 @@
 
             // Check for collisions with walls
             if (ball.x + ball.dx > canvas.width - ball.radius || ball.x + ball.dx < ball.radius) {
-                ball.dx = -ball.dx;
+                ball.dx = 0;
             }
             if (ball.y + ball.dy > canvas.height - ball.radius || ball.y + ball.dy < ball.radius) {
-                ball.dy = -ball.dy;
+                ball.dy = 0;
+            }
+
+            // Check if ball is in hole
+            const dist = Math.sqrt((ball.x - hole.x) ** 2 + (ball.y - hole.y) ** 2);
+            if (dist < ball.radius + hole.radius) {
+                alert('Du har slået bolden i hullet!');
+                ball.dx = 0;
+                ball.dy = 0;
+                ball.x = 50;
+                ball.y = canvas.height - 50;
             }
         }
 
         // Draw the game elements
         function draw() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
+            drawHole();
             drawBall();
             updateBall();
             requestAnimationFrame(draw);
         }
+
+        // Handle user input
+        canvas.addEventListener('click', (e) => {
+            const rect = canvas.getBoundingClientRect();
+            const clickX = e.clientX - rect.left;
+            const clickY = e.clientY - rect.top;
+
+            // Calculate the direction of the ball
+            const angle = Math.atan2(clickY - ball.y, clickX - ball.x);
+            ball.dx = ball.speed * Math.cos(angle);
+            ball.dy = ball.speed * Math.sin(angle);
+        });
 
         draw();
     </script>
