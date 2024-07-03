@@ -13,11 +13,25 @@
             font-family: Arial, sans-serif;
             color: #fff;
         }
+        nav {
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 10px;
+            text-align: center;
+        }
+        nav a {
+            color: #fff;
+            margin: 0 15px;
+            text-decoration: none;
+            font-size: 18px;
+        }
+        nav a:hover {
+            text-decoration: underline;
+        }
         .container {
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+            height: 90vh; /* Adjusted height to accommodate the navigation bar */
             flex-direction: column;
             text-align: center;
             background-color: rgba(0, 0, 0, 0.5);
@@ -37,6 +51,10 @@
     </style>
 </head>
 <body>
+    <nav>
+        <a href="index.html">Hjem</a>
+        <a href="kontakt.html">Kontakt</a>
+    </nav>
     <div class="container">
         <h1>Kontakt os</h1>
         <p>Email: <a href="mailto:simon-kolind-fuglsang@hotmail.com">simon-kolind-fuglsang@hotmail.com</a></p>
