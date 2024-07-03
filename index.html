@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Scrolleramme med Billeder og Videoer</title>
+    <title>Forside</title>
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css"/>
     <style>
@@ -14,11 +14,25 @@
             margin: 0;
             font-family: Arial, sans-serif;
         }
+        nav {
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 10px;
+            text-align: center;
+        }
+        nav a {
+            color: #fff;
+            margin: 0 15px;
+            text-decoration: none;
+            font-size: 18px;
+        }
+        nav a:hover {
+            text-decoration: underline;
+        }
         .container {
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+            height: 90vh; /* Adjusted height to accommodate the navigation bar */
             position: relative;
         }
         .slider {
@@ -60,6 +74,10 @@
     </style>
 </head>
 <body>
+    <nav>
+        <a href="index.html">Hjem</a>
+        <a href="kontakt.html">Kontakt</a>
+    </nav>
     <div class="container">
         <div class="slider">
             <div><img src="https://github.com/skfugl/golf/blob/main/Billede1.png?raw=true" alt="Billede 1"></div>
