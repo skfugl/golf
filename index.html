@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Forside</title>
+    <title>Hjem</title>
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css"/>
     <style>
@@ -13,6 +13,7 @@
             background-position: center;
             margin: 0;
             font-family: Arial, sans-serif;
+            color: #fff;
         }
         nav {
             background-color: rgba(0, 0, 0, 0.7);
@@ -32,13 +33,16 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 90vh; /* Adjusted height to accommodate the navigation bar */
-            position: relative;
+            flex-direction: column;
+            text-align: center;
+            padding: 20px;
+            border-radius: 15px;
         }
         .slider {
             width: 80%;
             max-width: 1000px;
             position: relative;
+            margin-bottom: 20px;
         }
         .slick-slide img, .slick-slide iframe {
             width: 100%;
@@ -71,12 +75,19 @@
         .slick-next:before {
             content: '→'; /* Right arrow */
         }
+        .description {
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 20px;
+            border-radius: 15px;
+            max-width: 1000px;
+            margin: auto;
+        }
     </style>
 </head>
 <body>
     <nav>
         <a href="index.html">Hjem</a>
-        <a href="kontakt.html">Kontakt</a>
+        <a href="kontakt.html">Kontakt mig</a>
     </nav>
     <div class="container">
         <div class="slider">
@@ -85,6 +96,13 @@
             <div><iframe src="https://www.youtube.com/embed/qXOqLLebe08" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
             <div><img src="https://github.com/skfugl/golf/blob/main/Billede3.png?raw=true" alt="Billede 3"></div>
             <div><iframe src="https://www.youtube.com/embed/xKkmNVpHHXI" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
+        </div>
+        <div class="description">
+            <h2>Velkommen</h2>
+            <p>Velkommen til en side dedikeret til golfens mest sublime øjeblikke og teknikker, hvor passion møder præcision. Her på forsiden præsenterer vi et mesterværk i golfhistorien – min birdie fra Løkkens Pay N' Play på det legendariske hul 8.</p>
+            <p>Forestil dig scenen: Et 195 meter langt, blindt par 3 hul, hvor kun de modigste tør udfordre skæbnen. Dette er ikke et hul for de svage sjæle, men en test af ægte talent og beslutsomhed. Med vinden som din eneste guide og flaget skjult fra dit synsfelt, kræver hvert slag en perfekt blanding af styrke, præcision og intuition.</p>
+            <p>På denne dag stod jeg foran tee-stedet, klar til at tage udfordringen op. Med en fast hånd og et klart sind slog jeg bolden med en kraft og elegance, der kun kan beskrives som magisk. Bolden fløj gennem luften, over bakken, og landede perfekt på greenen – kun få meter fra hullet.</p>
+            <p>Mens jeg nærmede mig greenen, kunne jeg mærke spændingen bygge op. En rolig putt, og bolden rullede smukt ind i koppen. En birdie! Et vidnesbyrd om mine evner og min uovertrufne forståelse af spillet. Dette er mere end bare et spil; det er en kunstform. Jeg inviterer dig til at opleve denne magi med mig.</p>
         </div>
     </div>
 
