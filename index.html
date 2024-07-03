@@ -161,20 +161,20 @@
         const courseTexture = textureLoader.load('https://raw.githubusercontent.com/skfugl/golf/b361ef0f4c4010c9cfb8fb2484ed41db597f02f6/image.png');
 
         // Create course
-        const courseGeometry = new THREE.PlaneGeometry(10, 5);
+        const courseGeometry = new THREE.PlaneGeometry(10, 20);
         const courseMaterial = new THREE.MeshBasicMaterial({ map: courseTexture });
         const course = new THREE.Mesh(courseGeometry, courseMaterial);
         course.rotation.x = -Math.PI / 2;
         scene.add(course);
 
         // Create ball
-        const ballGeometry = new THREE.SphereGeometry(0.1, 32, 32);
+        const ballGeometry = new THREE.SphereGeometry(0.2, 32, 32);
         const ballMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff });
         const ball = new THREE.Mesh(ballGeometry, ballMaterial);
-        ball.position.set(-4.5, 0.1, 2);
+        ball.position.set(0, 0.2, 9);
         scene.add(ball);
 
-        camera.position.set(0, 5, 10);
+        camera.position.set(0, 10, 20);
         camera.lookAt(0, 0, 0);
 
         function animate() {
@@ -196,7 +196,7 @@
 
             if (intersects.length > 0) {
                 const point = intersects[0].point;
-                ball.position.set(point.x, 0.1, point.z);
+                ball.position.set(point.x, 0.2, point.z);
             }
         });
     </script>
