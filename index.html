@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scrolleramme med Billeder og Videoer</title>
+    <style>
+        body {
+            background-image: url('https://raw.githubusercontent.com/skfugl/golf/main/Baggrund.png');
+            background-size: cover;
+            background-position: center;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .scroll-frame {
+            width: 80%;
+            height: 80%;
+            overflow-x: scroll;
+            white-space: nowrap;
+            border: 5px solid #000;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+        .scroll-frame img, .scroll-frame video {
+            height: 100%;
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="scroll-frame">
+            <img src="https://github.com/skfugl/golf/blob/main/Billede1.png?raw=true" alt="Billede 1">
+            <img src="https://github.com/skfugl/golf/blob/main/Billede2.png?raw=true" alt="Billede 2">
+            <img src="https://github.com/skfugl/golf/blob/main/Billede3.png?raw=true">
+            <video src="https://youtube.com/shorts/qXOqLLebe08?feature=share" controls></video>
+            <video src="https://youtu.be/xKkmNVpHHXI></video>
+        </div>
+    </div>
+</body>
+</html>
