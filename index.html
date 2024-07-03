@@ -19,18 +19,31 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
+            position: relative;
+        }
+        .frame {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-image: url('https://dekolagersalg.dk/wp-content/uploads/2022/03/BK130.jpg');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            pointer-events: none; /* Ensure the frame does not interfere with user interactions */
         }
         .slider {
             width: 80%;
             max-width: 1000px;
-            border: 20px solid transparent;
-            border-image: url('https://dekolagersalg.dk/wp-content/uploads/2022/03/BK130.jpg') 100 round;
-            box-sizing: border-box;
+            position: relative;
         }
         .slick-slide img, .slick-slide iframe {
             width: 100%;
             height: 600px;
             object-fit: cover;
+        }
+        .slick-slide:nth-child(1) img {
+            height: 800px;
+            object-position: top;
         }
         .slick-prev, .slick-next {
             z-index: 1000;
@@ -54,13 +67,11 @@
         .slick-next:before {
             content: '→'; /* Right arrow */
         }
-        .slick-slide:nth-child(1) img {
-            height: 1000px;
-        }
     </style>
 </head>
 <body>
     <div class="container">
+        <div class="frame"></div>
         <div class="slider">
             <div><img src="https://github.com/skfugl/golf/blob/main/Billede1.png?raw=true" alt="Billede 1"></div>
             <div><img src="https://github.com/skfugl/golf/blob/main/Billede2.png?raw=true" alt="Billede 2"></div>
