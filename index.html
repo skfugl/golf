@@ -90,17 +90,6 @@
             margin-top: 20px;
             margin-bottom: 20px;
         }
-        .game-container {
-            margin-top: 20px;
-            width: 100%;
-            max-width: 1000px;
-        }
-        #golfGame {
-            width: 100%;
-            height: 500px;
-            background: #87CEEB; /* Himmelblå farve */
-            border: 2px solid #000; /* Sort kant */
-        }
     </style>
 </head>
 <body>
@@ -126,16 +115,11 @@
             <p>På denne dag stod jeg foran tee-stedet, klar til at tage udfordringen op. Med en fast hånd og et klart sind slog jeg bolden med en kraft og elegance, der kun kan beskrives som magisk. Bolden fløj gennem luften, over bakken, og landede perfekt på greenen – kun få meter fra hullet.</p>
             <p>Mens jeg nærmede mig greenen, kunne jeg mærke spændingen bygge op. En rolig putt, og bolden rullede smukt ind i koppen. En birdie! Et vidnesbyrd om mine evner og min uovertrufne forståelse af spillet. Dette er mere end bare et spil; det er en kunstform. Jeg inviterer dig til at opleve denne magi med mig.</p>
         </div>
-        <div class="game-container">
-            <h2>Spil Golf på Hul 8</h2>
-            <div id="golfGame"></div>
-        </div>
     </div>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script>
         $(document).ready(function(){
             $('.slider').slick({
@@ -147,57 +131,6 @@
                 arrows: true,
                 autoplay: false
             });
-        });
-
-        // Three.js setup
-        const scene = new THREE.Scene();
-        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-        const renderer = new THREE.WebGLRenderer();
-        renderer.setSize(window.innerWidth, window.innerHeight);
-        document.getElementById('golfGame').appendChild(renderer.domElement);
-
-        // Load texture
-        const textureLoader = new THREE.TextureLoader();
-        const courseTexture = textureLoader.load('https://raw.githubusercontent.com/skfugl/golf/b361ef0f4c4010c9cfb8fb2484ed41db597f02f6/image.png');
-
-        // Create course
-        const courseGeometry = new THREE.PlaneGeometry(10, 20);
-        const courseMaterial = new THREE.MeshBasicMaterial({ map: courseTexture });
-        const course = new THREE.Mesh(courseGeometry, courseMaterial);
-        course.rotation.x = -Math.PI / 2;
-        scene.add(course);
-
-        // Create ball
-        const ballGeometry = new THREE.SphereGeometry(0.2, 32, 32);
-        const ballMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff });
-        const ball = new THREE.Mesh(ballGeometry, ballMaterial);
-        ball.position.set(0, 0.2, 9);
-        scene.add(ball);
-
-        camera.position.set(0, 10, 20);
-        camera.lookAt(0, 0, 0);
-
-        function animate() {
-            requestAnimationFrame(animate);
-            renderer.render(scene, camera);
-        }
-        animate();
-
-        // Handle click event to move ball
-        renderer.domElement.addEventListener('click', function(event) {
-            const mouse = new THREE.Vector2(
-                (event.clientX / window.innerWidth) * 2 - 1,
-                -(event.clientY / window.innerHeight) * 2 + 1
-            );
-
-            const raycaster = new THREE.Raycaster();
-            raycaster.setFromCamera(mouse, camera);
-            const intersects = raycaster.intersectObjects([course]);
-
-            if (intersects.length > 0) {
-                const point = intersects[0].point;
-                ball.position.set(point.x, 0.2, point.z);
-            }
         });
     </script>
 </body>
