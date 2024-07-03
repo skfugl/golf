@@ -90,6 +90,13 @@
             margin-top: 20px;
             margin-bottom: 20px;
         }
+        .game-container {
+            margin-top: 20px;
+        }
+        canvas {
+            background-color: #87CEEB; /* Himmelblå farve */
+            border: 2px solid #000; /* Sort kant */
+        }
     </style>
 </head>
 <body>
@@ -115,12 +122,16 @@
             <p>På denne dag stod jeg foran tee-stedet, klar til at tage udfordringen op. Med en fast hånd og et klart sind slog jeg bolden med en kraft og elegance, der kun kan beskrives som magisk. Bolden fløj gennem luften, over bakken, og landede perfekt på greenen – kun få meter fra hullet.</p>
             <p>Mens jeg nærmede mig greenen, kunne jeg mærke spændingen bygge op. En rolig putt, og bolden rullede smukt ind i koppen. En birdie! Et vidnesbyrd om mine evner og min uovertrufne forståelse af spillet. Dette er mere end bare et spil; det er en kunstform. Jeg inviterer dig til at opleve denne magi med mig.</p>
         </div>
+        <div class="game-container">
+            <h2>Spil Golf på Hul 8</h2>
+            <canvas id="golfGame" width="800" height="400"></canvas>
+        </div>
     </div>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox.min.js"></script>
-    <script type="text/javascript">
+    <script>
         $(document).ready(function(){
             $('.slider').slick({
                 dots: true,
@@ -132,6 +143,53 @@
                 autoplay: false
             });
         });
+
+        // Simple Golf Game
+        const canvas = document.getElementById('golfGame');
+        const ctx = canvas.getContext('2d');
+
+        // Ball object
+        const ball = {
+            x: 50,
+            y: canvas.height - 30,
+            radius: 10,
+            color: 'white',
+            dx: 2,
+            dy: -2,
+        };
+
+        // Draw ball
+        function drawBall() {
+            ctx.beginPath();
+            ctx.arc(ball.x, ball.y, ball.radius, 0, Math.PI * 2);
+            ctx.fillStyle = ball.color;
+            ctx.fill();
+            ctx.closePath();
+        }
+
+        // Update ball position
+        function updateBall() {
+            ball.x += ball.dx;
+            ball.y += ball.dy;
+
+            // Check for collisions with walls
+            if (ball.x + ball.dx > canvas.width - ball.radius || ball.x + ball.dx < ball.radius) {
+                ball.dx = -ball.dx;
+            }
+            if (ball.y + ball.dy > canvas.height - ball.radius || ball.y + ball.dy < ball.radius) {
+                ball.dy = -ball.dy;
+            }
+        }
+
+        // Draw the game elements
+        function draw() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            drawBall();
+            updateBall();
+            requestAnimationFrame(draw);
+        }
+
+        draw();
     </script>
 </body>
 </html>
