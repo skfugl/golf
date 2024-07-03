@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Scrolleramme med Billeder og Videoer</title>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
     <style>
         body {
             background-image: url('https://raw.githubusercontent.com/skfugl/golf/main/Baggrund.png');
@@ -18,29 +19,42 @@
             align-items: center;
             height: 100vh;
         }
-        .scroll-frame {
+        .slider {
             width: 80%;
-            height: 80%;
-            overflow-x: scroll;
-            white-space: nowrap;
-            border: 5px solid #000;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            max-width: 800px;
         }
-        .scroll-frame img, .scroll-frame video {
-            height: 100%;
-            display: inline-block;
+        .slick-slide img, .slick-slide video {
+            width: 100%;
+            height: auto;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="scroll-frame">
-            <img src="https://github.com/skfugl/golf/blob/main/Billede1.png?raw=true" alt="Billede 1">
-            <img src="https://github.com/skfugl/golf/blob/main/Billede2.png?raw=true" alt="Billede 2">
-            <img src="https://github.com/skfugl/golf/blob/main/Billede3.png?raw=true">
-            <video src="https://youtube.com/shorts/qXOqLLebe08?feature=share" controls></video>
-            <video src="https://youtu.be/xKkmNVpHHXI></video>
+        <div class="slider">
+            <div><img src="https://github.com/skfugl/golf/blob/main/Billede1.png?raw=true" alt="Billede 1"></div>
+            <div><img src="https://github.com/skfugl/golf/blob/main/Billede2.png?raw=true" alt="Billede 2"></div>
+            <div><img src="https://github.com/skfugl/golf/blob/main/Billede3.png?raw=true" alt="Billede 3"></div>
+            <div><video src="https://youtube.com/shorts/qXOqLLebe08?feature=share" controls></video></div>
+            <div><video src="https://youtu.be/xKkmNVpHHXI" controls></video></div>
         </div>
     </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $('.slider').slick({
+                dots: true,
+                infinite: true,
+                speed: 500,
+                slidesToShow: 1,
+                slidesToScroll: 1,
+                arrows: true,
+                autoplay: true,
+                autoplaySpeed: 2000
+            });
+        });
+    </script>
 </body>
 </html>
