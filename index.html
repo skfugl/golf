@@ -6,6 +6,7 @@
     <title>Hjem</title>
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/css/lightbox.min.css" rel="stylesheet" />
     <style>
         body {
             background-image: url('https://raw.githubusercontent.com/skfugl/golf/main/Baggrund.png');
@@ -98,13 +99,13 @@
     </nav>
     <div class="container">
         <div class="slider">
-            <div><img src="https://github.com/skfugl/golf/blob/main/Billede1.png?raw=true" alt="Billede 1"></div>
-            <div><img src="https://github.com/skfugl/golf/blob/main/Billede2.png?raw=true" alt="Billede 2"></div>
+            <div><a href="https://github.com/skfugl/golf/blob/main/Billede1.png?raw=true" data-lightbox="golf"><img src="https://github.com/skfugl/golf/blob/main/Billede1.png?raw=true" alt="Billede 1"></a></div>
+            <div><a href="https://github.com/skfugl/golf/blob/main/Billede2.png?raw=true" data-lightbox="golf"><img src="https://github.com/skfugl/golf/blob/main/Billede2.png?raw=true" alt="Billede 2"></a></div>
             <div>
                 <h2 class="video-title">Sim flusher 6-jernet 195 meter i God-mode</h2>
                 <iframe src="https://www.youtube.com/embed/qXOqLLebe08" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
             </div>
-            <div><img src="https://github.com/skfugl/golf/blob/main/Billede3.png?raw=true" alt="Billede 3"></div>
+            <div><a href="https://github.com/skfugl/golf/blob/main/Billede3.png?raw=true" data-lightbox="golf"><img src="https://github.com/skfugl/golf/blob/main/Billede3.png?raw=true" alt="Billede 3"></a></div>
             <div><iframe src="https://www.youtube.com/embed/xKkmNVpHHXI" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
         </div>
         <div class="description">
@@ -118,6 +119,7 @@
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox.min.js"></script>
     <script type="text/javascript">
         $(document).ready(function(){
             $('.slider').slick({
