@@ -94,7 +94,7 @@
             margin-top: 20px;
         }
         canvas {
-            background-color: #87CEEB; /* Himmelblå farve */
+            background: #87CEEB; /* Himmelblå farve */
             border: 2px solid #000; /* Sort kant */
         }
     </style>
@@ -131,6 +131,7 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script>
         $(document).ready(function(){
             $('.slider').slick({
@@ -144,92 +145,54 @@
             });
         });
 
-        // Simple Golf Game
-        const canvas = document.getElementById('golfGame');
-        const ctx = canvas.getContext('2d');
+        // Three.js setup
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.body.appendChild(renderer.domElement);
 
-        // Golf hole dimensions
-        const hole = {
-            x: canvas.width - 50,
-            y: 50,
-            radius: 15
-        };
+        // Load texture
+        const textureLoader = new THREE.TextureLoader();
+        const courseTexture = textureLoader.load('https://raw.githubusercontent.com/skfugl/golf/b361ef0f4c4010c9cfb8fb2484ed41db597f02f6/image.png');
 
-        // Ball object
-        const ball = {
-            x: 50,
-            y: canvas.height - 50,
-            radius: 10,
-            color: 'white',
-            dx: 0,
-            dy: 0,
-            speed: 5
-        };
+        // Create course
+        const courseGeometry = new THREE.PlaneGeometry(10, 5);
+        const courseMaterial = new THREE.MeshBasicMaterial({ map: courseTexture });
+        const course = new THREE.Mesh(courseGeometry, courseMaterial);
+        scene.add(course);
 
-        // Draw ball
-        function drawBall() {
-            ctx.beginPath();
-            ctx.arc(ball.x, ball.y, ball.radius, 0, Math.PI * 2);
-            ctx.fillStyle = ball.color;
-            ctx.fill();
-            ctx.closePath();
+        // Create ball
+        const ballGeometry = new THREE.SphereGeometry(0.1, 32, 32);
+        const ballMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff });
+        const ball = new THREE.Mesh(ballGeometry, ballMaterial);
+        ball.position.set(-4.5, -2, 0.1);
+        scene.add(ball);
+
+        camera.position.z = 5;
+
+        function animate() {
+            requestAnimationFrame(animate);
+            renderer.render(scene, camera);
         }
+        animate();
 
-        // Draw hole
-        function drawHole() {
-            ctx.beginPath();
-            ctx.arc(hole.x, hole.y, hole.radius, 0, Math.PI * 2);
-            ctx.fillStyle = 'black';
-            ctx.fill();
-            ctx.closePath();
-        }
+        // Handle click event to move ball
+        renderer.domElement.addEventListener('click', function(event) {
+            const mouse = new THREE.Vector2(
+                (event.clientX / window.innerWidth) * 2 - 1,
+                -(event.clientY / window.innerHeight) * 2 + 1
+            );
 
-        // Update ball position
-        function updateBall() {
-            ball.x += ball.dx;
-            ball.y += ball.dy;
+            const raycaster = new THREE.Raycaster();
+            raycaster.setFromCamera(mouse, camera);
+            const intersects = raycaster.intersectObjects([course]);
 
-            // Check for collisions with walls
-            if (ball.x + ball.dx > canvas.width - ball.radius || ball.x + ball.dx < ball.radius) {
-                ball.dx = 0;
+            if (intersects.length > 0) {
+                const point = intersects[0].point;
+                ball.position.set(point.x, point.y, 0.1);
             }
-            if (ball.y + ball.dy > canvas.height - ball.radius || ball.y + ball.dy < ball.radius) {
-                ball.dy = 0;
-            }
-
-            // Check if ball is in hole
-            const dist = Math.sqrt((ball.x - hole.x) ** 2 + (ball.y - hole.y) ** 2);
-            if (dist < ball.radius + hole.radius) {
-                alert('Du har slået bolden i hullet!');
-                ball.dx = 0;
-                ball.dy = 0;
-                ball.x = 50;
-                ball.y = canvas.height - 50;
-            }
-        }
-
-        // Draw the game elements
-        function draw() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            drawHole();
-            drawBall();
-            updateBall();
-            requestAnimationFrame(draw);
-        }
-
-        // Handle user input
-        canvas.addEventListener('click', (e) => {
-            const rect = canvas.getBoundingClientRect();
-            const clickX = e.clientX - rect.left;
-            const clickY = e.clientY - rect.top;
-
-            // Calculate the direction of the ball
-            const angle = Math.atan2(clickY - ball.y, clickX - ball.x);
-            ball.dx = ball.speed * Math.cos(angle);
-            ball.dy = ball.speed * Math.sin(angle);
         });
-
-        draw();
     </script>
 </body>
 </html>
