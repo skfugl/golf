@@ -8,6 +8,10 @@
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css"/>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/css/lightbox.min.css" rel="stylesheet" />
     <style>
+        @font-face {
+            font-family: 'GTAWasted';
+            src: url('https://raw.githubusercontent.com/skfugl/golf/main/gta-wasted.ttf') format('truetype');
+        }
         body {
             background-image: url('https://raw.githubusercontent.com/skfugl/golf/main/Baggrund.png');
             background-size: cover;
@@ -88,6 +92,13 @@
             align-items: center;
             margin-top: 20px;
         }
+        .death-message {
+            display: none;
+            font-family: 'GTAWasted', sans-serif;
+            font-size: 48px;
+            color: red;
+            margin-top: 20px;
+        }
     </style>
 </head>
 <body onload="startGame()">
@@ -112,6 +123,7 @@
         <div class="retry-container" id="retryContainer">
             <button class="augusta-button" onclick="location.reload()">Prøv igen</button>
         </div>
+        <div class="death-message" id="deathMessage">Du er død</div>
     </div>
 
     <script>
@@ -120,6 +132,7 @@
         var myScore;
         var crashSound = new Audio('https://raw.githubusercontent.com/skfugl/golf/main/crash.mp3');  // Tilføj din crash lydfil URL
         var scoreSound = new Audio('https://raw.githubusercontent.com/skfugl/golf/main/suuuiiii.mp3');  // Tilføj din score lydfil URL
+        var deathSound = new Audio('https://raw.githubusercontent.com/skfugl/golf/main/gta-v-death-sound-effect-102.mp3');  // Tilføj din death lydfil URL
         var backgroundMusic = new Audio('https://raw.githubusercontent.com/skfugl/golf/main/det%20er%20danmark%20remix.wav');  // URL til baggrundsmusik
 
         function startGame() {
@@ -130,6 +143,7 @@
             myScore = new component("30px", "Consolas", "black", 280, 40, "text");
             myGameArea.start();
             document.getElementById('retryContainer').style.display = 'none';
+            document.getElementById('deathMessage').style.display = 'none';
         }
 
         var myGameArea = {
@@ -149,7 +163,9 @@
             stop : function() {
                 clearInterval(this.interval);
                 document.getElementById('retryContainer').style.display = 'flex';
+                document.getElementById('deathMessage').style.display = 'block';
                 backgroundMusic.pause();
+                deathSound.play();
             }
         }
 
