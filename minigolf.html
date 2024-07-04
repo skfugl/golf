@@ -84,21 +84,12 @@
         <p>Brug ACCELERATE-knappen til at holde dig i luften</p>
         <p>Hvor længe kan du holde dig i live?</p>
         <p>Scor mere end 5.000 for en gratis prøvelektion</p>
-        <div id="highscore-container">
-            <h3>High Scores</h3>
-            <ul id="highscore-list"></ul>
-        </div>
-        <form id="highscore-form">
-            <input type="text" id="name" placeholder="Dit navn" required>
-            <button type="submit">Gem High Score</button>
-        </form>
     </div>
 
     <script>
         var myGamePiece;
         var myObstacles = [];
         var myScore;
-        var highScores = [];
 
         function startGame() {
             myGamePiece = new component(30, 30, "red", 10, 120);
@@ -178,7 +169,6 @@
             var x, height, gap, minHeight, maxHeight, minGap, maxGap;
             for (i = 0; i < myObstacles.length; i += 1) {
                 if (myGamePiece.crashWith(myObstacles[i])) {
-                    saveHighScore(myGameArea.frameNo);
                     return;
                 }
             }
@@ -213,36 +203,6 @@
         function accelerate(n) {
             myGamePiece.gravity = n;
         }
-
-        function saveHighScore(score) {
-            var name = prompt("Indtast dit navn for at gemme din high score:", "");
-            if (name != null && name != "") {
-                highScores.push({ name: name, score: score });
-                highScores.sort(function(a, b) { return b.score - a.score; });
-                updateHighScoreList();
-            }
-        }
-
-        function updateHighScoreList() {
-            var highscoreList = document.getElementById('highscore-list');
-            highscoreList.innerHTML = "";
-            for (var i = 0; i < highScores.length; i++) {
-                var li = document.createElement('li');
-                li.textContent = highScores[i].name + ": " + highScores[i].score;
-                highscoreList.appendChild(li);
-            }
-        }
-
-        document.getElementById('highscore-form').addEventListener('submit', function(event) {
-            event.preventDefault();
-            var name = document.getElementById('name').value;
-            var score = myGameArea.frameNo;
-            if (name != "") {
-                highScores.push({ name: name, score: score });
-                highScores.sort(function(a, b) { return b.score - a.score; });
-                updateHighScoreList();
-            }
-        });
     </script>
 </body>
 </html>
