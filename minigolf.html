@@ -70,7 +70,7 @@
     <script>
         // Three.js setup
         const scene = new THREE.Scene();
-        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const camera = new THREE.PerspectiveCamera(75, 800 / 500, 0.1, 1000);
         const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('minigolfGame') });
         renderer.setSize(800, 500);
         document.getElementById('minigolfGame').appendChild(renderer.domElement);
@@ -81,6 +81,22 @@
         const ground = new THREE.Mesh(groundGeometry, groundMaterial);
         ground.rotation.x = -Math.PI / 2;
         scene.add(ground);
+
+        // Create water hazard
+        const waterGeometry = new THREE.PlaneGeometry(4, 2);
+        const waterMaterial = new THREE.MeshBasicMaterial({ color: 0x0000ff });
+        const water = new THREE.Mesh(waterGeometry, waterMaterial);
+        water.rotation.x = -Math.PI / 2;
+        water.position.set(3, 0.01, 0);
+        scene.add(water);
+
+        // Create sand bunker
+        const sandGeometry = new THREE.PlaneGeometry(3, 1.5);
+        const sandMaterial = new THREE.MeshBasicMaterial({ color: 0xdeb887 });
+        const sand = new THREE.Mesh(sandGeometry, sandMaterial);
+        sand.rotation.x = -Math.PI / 2;
+        sand.position.set(-4, 0.01, -1);
+        scene.add(sand);
 
         // Create hole
         const holeGeometry = new THREE.CircleGeometry(0.5, 32);
