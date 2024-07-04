@@ -50,6 +50,21 @@
             background: #87CEEB; /* Himmelblå farve */
             border: 2px solid #000; /* Sort kant */
         }
+        .power-bar-container {
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 300px;
+            height: 30px;
+            background-color: #ccc;
+            border: 1px solid #000;
+        }
+        .power-bar {
+            width: 0;
+            height: 100%;
+            background-color: #ff0000;
+        }
     </style>
 </head>
 <body>
@@ -62,6 +77,9 @@
         <h1>Minigolf Spil</h1>
         <div class="game-container">
             <canvas id="minigolfGame"></canvas>
+        </div>
+        <div class="power-bar-container">
+            <div class="power-bar" id="powerBar"></div>
         </div>
     </div>
 
@@ -83,7 +101,11 @@
         scene.add(ground);
 
         // Create water hazard
-        const waterGeometry = new THREE.PlaneGeometry(4, 2);
+        const waterShape = new THREE.Shape();
+        waterShape.moveTo(-2, -1);
+        waterShape.quadraticCurveTo(0, -1.5, 2, -1);
+        waterShape.quadraticCurveTo(0, -0.5, -2, -1);
+        const waterGeometry = new THREE.ShapeGeometry(waterShape);
         const waterMaterial = new THREE.MeshBasicMaterial({ color: 0x0000ff });
         const water = new THREE.Mesh(waterGeometry, waterMaterial);
         water.rotation.x = -Math.PI / 2;
@@ -92,7 +114,7 @@
 
         // Create sand bunker
         const sandGeometry = new THREE.PlaneGeometry(3, 1.5);
-        const sandMaterial = new THREE.MeshBasicMaterial({ color: 0xdeb887 });
+        const sandMaterial = new THREE.MeshBasicMaterial({ color: 0xffff00 });
         const sand = new THREE.Mesh(sandGeometry, sandMaterial);
         sand.rotation.x = -Math.PI / 2;
         sand.position.set(-4, 0.01, -1);
@@ -113,6 +135,10 @@
         ball.position.set(0, 0.2, 4);
         scene.add(ball);
 
+        let power = 0;
+        let powerIncreasing = true;
+        let direction = new THREE.Vector3(0, 0, -1);
+
         camera.position.set(0, 5, 10);
         camera.lookAt(0, 0, 0);
 
@@ -122,7 +148,44 @@
         }
         animate();
 
-        // Handle click event to move ball
+        function moveBall() {
+            ball.position.addScaledVector(direction, power * 0.1);
+            power = 0;
+            document.getElementById('powerBar').style.width = '0';
+        }
+
+        // Handle keyboard events for direction and power
+        window.addEventListener('keydown', function(event) {
+            switch (event.key) {
+                case 'ArrowLeft':
+                    ball.rotation.y += 0.1;
+                    direction.applyAxisAngle(new THREE.Vector3(0, 1, 0), 0.1);
+                    break;
+                case 'ArrowRight':
+                    ball.rotation.y -= 0.1;
+                    direction.applyAxisAngle(new THREE.Vector3(0, 1, 0), -0.1);
+                    break;
+                case ' ':
+                    if (powerIncreasing) {
+                        power = 0;
+                        powerIncreasing = false;
+                        increasePower();
+                    } else {
+                        moveBall();
+                        powerIncreasing = true;
+                    }
+                    break;
+            }
+        });
+
+        function increasePower() {
+            if (!powerIncreasing) return;
+            power = (power + 1) % 100;
+            document.getElementById('powerBar').style.width = power + '%';
+            requestAnimationFrame(increasePower);
+        }
+
+        // Handle click event to check if ball is in hole
         renderer.domElement.addEventListener('click', function(event) {
             const rect = renderer.domElement.getBoundingClientRect();
             const mouse = new THREE.Vector2(
@@ -137,6 +200,12 @@
             if (intersects.length > 0) {
                 const point = intersects[0].point;
                 ball.position.set(point.x, 0.2, point.z);
+            }
+
+            // Check if ball is in hole
+            const dist = ball.position.distanceTo(hole.position);
+            if (dist < 0.5) {
+                alert('Du har slået bolden i hullet!');
             }
         });
     </script>
