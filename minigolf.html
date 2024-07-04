@@ -65,7 +65,7 @@
         }
         canvas {
             border: 1px solid #d3d3d3;
-            background-color: #f1f1f1;
+            background-color: #01472b; /* Masters Green */
         }
         .game-container {
             position: relative;
@@ -105,6 +105,12 @@
             text-transform: uppercase;
             text-shadow: 2px 2px 4px #000;
         }
+        .footer {
+            margin-top: 20px;
+            font-family: 'Georgia', serif;
+            font-size: 18px;
+            color: #ffd700; /* Masters Gold */
+        }
     </style>
 </head>
 <body onload="startGame()">
@@ -124,9 +130,11 @@
             </div>
             <div class="death-message" id="deathMessage">Du er død</div>
         </div>
-        <p>Brug ACCELERATE-knappen til at holde dig i luften</p>
-        <p>Hvor længe kan du holde dig i live?</p>
-        <p>Scor mere end 5.000 for en gratis prøvelektion</p>
+        <div class="footer">
+            <p>Brug ACCELERATE-knappen til at holde dig i luften</p>
+            <p>Hvor længe kan du holde dig i live?</p>
+            <p>Scor mere end 5.000 for en gratis prøvelektion</p>
+        </div>
         <div class="retry-container" id="retryContainer">
             <button class="augusta-button" onclick="location.reload()">Prøv igen</button>
         </div>
@@ -144,7 +152,7 @@
         function startGame() {
             backgroundMusic.loop = true;
             backgroundMusic.play();
-            myGamePiece = new component(30, 30, "#01472b", 10, 120);  // Ændret farve til Masters Green
+            myGamePiece = new component(30, 30, "#ffffff", 10, 120);  // Ændret farve til hvid
             myGamePiece.gravity = 0.05;
             myScore = new component("30px", "Consolas", "black", 280, 40, "text");
             myGameArea.start();
