@@ -94,10 +94,13 @@
         }
         .death-message {
             display: none;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
             font-family: 'Pricedown', sans-serif;
             font-size: 48px;
             color: red;
-            margin-top: 20px;
             font-weight: bold;
             text-transform: uppercase;
             text-shadow: 2px 2px 4px #000;
@@ -119,6 +122,7 @@
             <div class="button-container">
                 <button class="augusta-button" onmousedown="accelerate(-0.2)" onmouseup="accelerate(0.05)">ACCELERATE</button>
             </div>
+            <div class="death-message" id="deathMessage">Du er død</div>
         </div>
         <p>Brug ACCELERATE-knappen til at holde dig i luften</p>
         <p>Hvor længe kan du holde dig i live?</p>
@@ -126,7 +130,6 @@
         <div class="retry-container" id="retryContainer">
             <button class="augusta-button" onclick="location.reload()">Prøv igen</button>
         </div>
-        <div class="death-message" id="deathMessage">Du er død</div>
     </div>
 
     <script>
@@ -141,7 +144,7 @@
         function startGame() {
             backgroundMusic.loop = true;
             backgroundMusic.play();
-            myGamePiece = new component(30, 30, "red", 10, 120);
+            myGamePiece = new component(30, 30, "#01472b", 10, 120);  // Ændret farve til Masters Green
             myGamePiece.gravity = 0.05;
             myScore = new component("30px", "Consolas", "black", 280, 40, "text");
             myGameArea.start();
@@ -252,8 +255,8 @@
                 minGap = 50;
                 maxGap = 200;
                 gap = Math.floor(Math.random() * (maxGap - minGap + 1) + minGap);
-                myObstacles.push(new component(10, height, "green", x, 0));
-                myObstacles.push(new component(10, x - height - gap, "green", x, height + gap));
+                myObstacles.push(new component(10, height, "#ffd700", x, 0));  // Ændret farve til Masters Gold
+                myObstacles.push(new component(10, x - height - gap, "#ffd700", x, height + gap));  // Ændret farve til Masters Gold
             }
             for (i = 0; i < myObstacles.length; i += 1) {
                 myObstacles[i].x += -1;
