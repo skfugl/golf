@@ -43,6 +43,7 @@
             margin-top: 20px;
             width: 100%;
             max-width: 800px;
+            position: relative;
         }
         #minigolfGame {
             width: 100%;
@@ -77,9 +78,9 @@
         <h1>Minigolf Spil</h1>
         <div class="game-container">
             <canvas id="minigolfGame"></canvas>
-        </div>
-        <div class="power-bar-container">
-            <div class="power-bar" id="powerBar"></div>
+            <div class="power-bar-container">
+                <div class="power-bar" id="powerBar"></div>
+            </div>
         </div>
     </div>
 
@@ -113,7 +114,11 @@
         scene.add(water);
 
         // Create sand bunker
-        const sandGeometry = new THREE.PlaneGeometry(3, 1.5);
+        const sandShape = new THREE.Shape();
+        sandShape.moveTo(-1.5, 0);
+        sandShape.quadraticCurveTo(0, -0.75, 1.5, 0);
+        sandShape.quadraticCurveTo(0, 0.75, -1.5, 0);
+        const sandGeometry = new THREE.ShapeGeometry(sandShape);
         const sandMaterial = new THREE.MeshBasicMaterial({ color: 0xffff00 });
         const sand = new THREE.Mesh(sandGeometry, sandMaterial);
         sand.rotation.x = -Math.PI / 2;
@@ -139,7 +144,7 @@
         let powerIncreasing = true;
         let direction = new THREE.Vector3(0, 0, -1);
 
-        camera.position.set(0, 5, 10);
+        camera.position.set(0, 10, 15); // Ændret kameravinkel
         camera.lookAt(0, 0, 0);
 
         function animate() {
