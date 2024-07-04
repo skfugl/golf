@@ -66,6 +66,12 @@
         .augusta-button:hover {
             background-color: #013721;
         }
+        .retry-container {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px;
+        }
     </style>
 </head>
 <body onload="startGame()">
@@ -84,6 +90,9 @@
         <p>Brug ACCELERATE-knappen til at holde dig i luften</p>
         <p>Hvor længe kan du holde dig i live?</p>
         <p>Scor mere end 5.000 for en gratis prøvelektion</p>
+        <div class="retry-container" id="retryContainer">
+            <button class="augusta-button" onclick="startGame()">Prøv igen</button>
+        </div>
     </div>
 
     <script>
@@ -96,6 +105,7 @@
             myGamePiece.gravity = 0.05;
             myScore = new component("30px", "Consolas", "black", 280, 40, "text");
             myGameArea.start();
+            document.getElementById('retryContainer').style.display = 'none';
         }
 
         var myGameArea = {
@@ -107,9 +117,14 @@
                 document.getElementById('myCanvas').replaceWith(this.canvas);
                 this.frameNo = 0;
                 this.interval = setInterval(updateGameArea, 20);
+                myObstacles = [];
             },
             clear : function() {
                 this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+            },
+            stop : function() {
+                clearInterval(this.interval);
+                document.getElementById('retryContainer').style.display = 'flex';
             }
         }
 
@@ -178,6 +193,7 @@
             var x, height, gap, minHeight, maxHeight, minGap, maxGap;
             for (i = 0; i < myObstacles.length; i += 1) {
                 if (myGamePiece.crashWith(myObstacles[i])) {
+                    myGameArea.stop();
                     return;
                 }
             }
