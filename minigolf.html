@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minigolf</title>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/css/lightbox.min.css" rel="stylesheet" />
+    <style>
+        body {
+            background-image: url('https://raw.githubusercontent.com/skfugl/golf/main/Baggrund.png');
+            background-size: cover;
+            background-position: center;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            color: #fff;
+        }
+        nav {
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 10px;
+            text-align: center;
+        }
+        nav a {
+            color: #fff;
+            margin: 0 15px;
+            text-decoration: none;
+            font-size: 18px;
+        }
+        nav a:hover {
+            text-decoration: underline;
+        }
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            text-align: center;
+            padding: 20px;
+            border-radius: 15px;
+        }
+        .game-container {
+            margin-top: 20px;
+            width: 100%;
+            max-width: 800px;
+        }
+        #minigolfGame {
+            width: 100%;
+            height: 500px;
+            background: #87CEEB; /* Himmelblå farve */
+            border: 2px solid #000; /* Sort kant */
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="index.html">Hjem</a>
+        <a href="kontakt.html">Kontakt mig</a>
+        <a href="minigolf.html">Minigolf</a>
+    </nav>
+    <div class="container">
+        <h1>Minigolf Spil</h1>
+        <div class="game-container">
+            <canvas id="minigolfGame"></canvas>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script>
+        // Three.js setup
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('minigolfGame') });
+        renderer.setSize(800, 500);
+        document.getElementById('minigolfGame').appendChild(renderer.domElement);
+
+        // Create ground
+        const groundGeometry = new THREE.PlaneGeometry(20, 10);
+        const groundMaterial = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
+        const ground = new THREE.Mesh(groundGeometry, groundMaterial);
+        ground.rotation.x = -Math.PI / 2;
+        scene.add(ground);
+
+        // Create hole
+        const holeGeometry = new THREE.CircleGeometry(0.5, 32);
+        const holeMaterial = new THREE.MeshBasicMaterial({ color: 0x000000 });
+        const hole = new THREE.Mesh(holeGeometry, holeMaterial);
+        hole.position.set(0, 0.01, -4);
+        hole.rotation.x = -Math.PI / 2;
+        scene.add(hole);
+
+        // Create ball
+        const ballGeometry = new THREE.SphereGeometry(0.2, 32, 32);
+        const ballMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff });
+        const ball = new THREE.Mesh(ballGeometry, ballMaterial);
+        ball.position.set(0, 0.2, 4);
+        scene.add(ball);
+
+        camera.position.set(0, 5, 10);
+        camera.lookAt(0, 0, 0);
+
+        function animate() {
+            requestAnimationFrame(animate);
+            renderer.render(scene, camera);
+        }
+        animate();
+
+        // Handle click event to move ball
+        renderer.domElement.addEventListener('click', function(event) {
+            const mouse = new THREE.Vector2(
+                (event.clientX / window.innerWidth) * 2 - 1,
+                -(event.clientY / window.innerHeight) * 2 + 1
+            );
+
+            const raycaster = new THREE.Raycaster();
+            raycaster.setFromCamera(mouse, camera);
+            const intersects = raycaster.intersectObjects([ground]);
+
+            if (intersects.length > 0) {
+                const point = intersects[0].point;
+                ball.position.set(point.x, 0.2, point.z);
+            }
+        });
+    </script>
+</body>
+</html>
