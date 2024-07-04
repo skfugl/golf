@@ -14,18 +14,37 @@
             color: #fff;
         }
         nav {
-            background-color: rgba(0, 0, 0, 0.7);
+            background-color: #01472b; /* Masters Green */
             padding: 10px;
-            text-align: center;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
-        nav a {
-            color: #fff;
-            margin: 0 15px;
+        nav .menu {
+            display: flex;
+            gap: 20px;
+        }
+        nav .menu a {
+            color: #ffd700; /* Masters Gold */
             text-decoration: none;
             font-size: 18px;
+            font-family: 'Georgia', serif;
+            padding: 10px 20px;
         }
-        nav a:hover {
-            text-decoration: underline;
+        nav .menu a:hover {
+            background-color: #013721; /* Darker Green */
+            border-radius: 5px;
+        }
+        nav .menu .button {
+            background-color: #ffd700; /* Masters Gold */
+            color: #01472b; /* Masters Green */
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+        nav .menu .button:hover {
+            background-color: #013721; /* Darker Green */
+            color: #ffd700; /* Masters Gold */
         }
         .container {
             display: flex;
@@ -55,9 +74,12 @@
 </head>
 <body>
     <nav>
-        <a href="index.html">Hjem</a>
-        <a href="kontakt.html">Kontakt mig</a>
-        <a href="minigolf.html">Minigolf</a>
+        <div class="menu">
+            <a href="index.html">Hjem</a>
+            <a href="kontakt.html">Kontakt mig</a>
+            <a href="minigolf.html">Minigolf</a>
+            <a href="#" class="button">Shop</a>
+        </div>
     </nav>
     <div class="container">
         <h1>Kontakt mig</h1>
