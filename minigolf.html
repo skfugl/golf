@@ -69,11 +69,11 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script>
         // Three.js setup
+        const canvas = document.getElementById('minigolfGame');
         const scene = new THREE.Scene();
-        const camera = new THREE.PerspectiveCamera(75, 800 / 500, 0.1, 1000);
-        const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('minigolfGame') });
-        renderer.setSize(800, 500);
-        document.getElementById('minigolfGame').appendChild(renderer.domElement);
+        const camera = new THREE.PerspectiveCamera(75, canvas.clientWidth / canvas.clientHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ canvas: canvas });
+        renderer.setSize(canvas.clientWidth, canvas.clientHeight);
 
         // Create ground
         const groundGeometry = new THREE.PlaneGeometry(20, 10);
