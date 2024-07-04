@@ -48,10 +48,7 @@
             position: relative;
         }
         .button-container {
-            position: absolute;
-            bottom: 10px;
-            left: 50%;
-            transform: translateX(-50%);
+            margin-top: 20px;
         }
         .augusta-button {
             background-color: #01472b;
@@ -99,8 +96,13 @@
         var myGamePiece;
         var myObstacles = [];
         var myScore;
+        var crashSound = new Audio('crash.mp3');  // Tilføj din crash lydfil
+        var scoreSound = new Audio('score.mp3');  // Tilføj din score lydfil
+        var backgroundMusic = new Audio('background.mp3');  // Tilføj din baggrundsmusik
 
         function startGame() {
+            backgroundMusic.loop = true;
+            backgroundMusic.play();
             myGamePiece = new component(30, 30, "red", 10, 120);
             myGamePiece.gravity = 0.05;
             myScore = new component("30px", "Consolas", "black", 280, 40, "text");
@@ -125,6 +127,7 @@
             stop : function() {
                 clearInterval(this.interval);
                 document.getElementById('retryContainer').style.display = 'flex';
+                backgroundMusic.pause();
             }
         }
 
@@ -193,6 +196,7 @@
             var x, height, gap, minHeight, maxHeight, minGap, maxGap;
             for (i = 0; i < myObstacles.length; i += 1) {
                 if (myGamePiece.crashWith(myObstacles[i])) {
+                    crashSound.play();
                     myGameArea.stop();
                     return;
                 }
@@ -218,6 +222,9 @@
             myScore.update();
             myGamePiece.newPos();
             myGamePiece.update();
+            if (myGameArea.frameNo % 1000 === 0) {  // Afspil scorelyd for hver 1000 point
+                scoreSound.play();
+            }
         }
 
         function everyinterval(n) {
