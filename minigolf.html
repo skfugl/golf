@@ -139,6 +139,7 @@
                 this.gravitySpeed += this.gravity;
                 this.x += this.speedX;
                 this.y += this.speedY + this.gravitySpeed;
+                this.hitBoundary();
                 this.hitBottom();
             }
             this.hitBottom = function() {
@@ -146,6 +147,14 @@
                 if (this.y > rockbottom) {
                     this.y = rockbottom;
                     this.gravitySpeed = 0;
+                }
+            }
+            this.hitBoundary = function() {
+                if (this.x < 0) {
+                    this.x = 0;
+                }
+                if (this.x > myGameArea.canvas.width - this.width) {
+                    this.x = myGameArea.canvas.width - this.width;
                 }
             }
             this.crashWith = function(otherobj) {
